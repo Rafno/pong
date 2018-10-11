@@ -27,7 +27,7 @@ g_ball.update = function (du) {
     {
         this.yVel *= -1;
     }
-    if (blockTest.collidesWith(prevY, prevX, nextY, nextX, this.radius))
+    if (lineTest.collidesWith(prevY, prevX, nextY, nextX, this.radius))
     {
         this.yVel *= -1;
     }

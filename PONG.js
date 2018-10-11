@@ -42,11 +42,10 @@ var g_paddle1 = new Paddle({
     GO_LEFT : KEY_A
 });
 
-let blockTest = new Block({
-    cx : 100,
-    cy : 50,
-    isHit : false
-});
+let lineTest = new Line();
+lineTest.create();
+
+
 
 // =============
 // GATHER INPUTS
