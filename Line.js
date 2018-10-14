@@ -5,31 +5,47 @@ function Line(descr) {
     }
 }
 
+
 // Add these properties to the prototype, where they will server as
 // shared defaults, in the absence of an instance-specific overrides.
-
+Line.prototype.lineOfBlocks = [];
 Line.prototype.halfWidth = 50;
 Line.prototype.halfHeight = 10;
-let blockTest = new Block({
-    cx : 100,
-    cy : 50,
-    isHit : false
-});
-Line.prototype.create = function () {
-    let blockTest = new Block({
-        cx : 100,
-        cy : 50,
-        isHit : false
- });
+Line.prototype.create = function (yValue, size, hp) {
+    for (let i = 0; i < size; i++) {
+        let block = new Block({
+            cx: 30 + i * 65,
+            cy: yValue,
+            health: hp
+        });
+        this.lineOfBlocks.push(block);
+    }
+};
+// Moves the line down
+Line.prototype.move = function (pauseButton) {
+    if(!pauseButton){
+    this.lineOfBlocks.forEach(block => {
+        block.cy += 20;
+        if(block.cy == g_paddle1.cy){
+            gameOver();
+        }
+    });
+}
 };
 
 Line.prototype.render = function (ctx) {
-    // (cx, cy) is the centre; must offset it for drawing
-    blockTest.render(ctx);
+    this.lineOfBlocks.forEach(block => block.render(ctx));
 };
 
-Line.prototype.collidesWith = function (prevY, prevX, 
-                                          nextY, nextX, 
-                                          r) {
-     blockTest.collidesWith(prevY, prevX, nextY, nextX, this.radius)
+
+Line.prototype.collidesWith = function (prevY, prevX,
+    nextY, nextX,
+    r) {
+    let response = false;
+    this.lineOfBlocks.forEach(block => {
+        if (block.collidesWith(prevY, prevX, nextY, nextX, r)) {
+            response = true;
+        }
+    });
+    return response;
 };

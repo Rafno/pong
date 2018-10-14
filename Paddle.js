@@ -27,6 +27,15 @@ Paddle.prototype.render = function (ctx) {
                  this.halfHeight * 2);
 };
 
+Paddle.prototype.powerUp = function (type){
+    if(type === "Length"){
+        this.halfWidth = 100;
+    }
+    setTimeout(function() {
+        this.halfWidth = 50;
+    }, 3000);
+}
+
 Paddle.prototype.collidesWith = function (prevY, prevX, 
                                           nextY, nextX, 
                                           r) {

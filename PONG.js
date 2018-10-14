@@ -36,16 +36,19 @@ var KEY_D = 'D'.charCodeAt(0);
 
 var g_paddle1 = new Paddle({
     cx : 100,
-    cy : 300,
+    cy : 350,
     
     GO_RIGHT   : KEY_D,
     GO_LEFT : KEY_A
 });
+// Line creates a line of blocks, and then moves them every 5 seconds.
+let line = new Line();
+line.create(50,6,3);
+line.create(100,6,2);
+line.create(150,6,1);
 
-let lineTest = new Line();
-lineTest.create();
-
-
+// Sets up a timer to move the line, pauses if pause is on. 
+setInterval(function(){ line.move(g_isUpdatePaused) }, 5000);
 
 // =============
 // GATHER INPUTS
@@ -71,13 +74,17 @@ function gatherInputs() {
 // GAME-SPECIFIC UPDATE LOGIC
 
 function updateSimulation(du) {
-    
+    powerUp.update(du);
     g_ball.update(du);
-    
     g_paddle1.update(du);
-    blockTest.update(du);
 }
 
+// Pause the game and disconnect the pause, ending the game.
+function gameOver(){
+    endGame = true;
+    KEY_PAUSE = "YOU GET NOTHING";
+    g_isUpdatePaused = true;
+}
 
 // =================
 // RENDER SIMULATION
@@ -96,10 +103,9 @@ function updateSimulation(du) {
 function renderSimulation(ctx) {
 
     g_ball.render(ctx);
-    
     g_paddle1.render(ctx);
-
-    blockTest.render(ctx);
+    powerUp.render(ctx);
+    line.render(ctx);
 }
 
 // Kick it off

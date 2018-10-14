@@ -27,7 +27,7 @@ g_ball.update = function (du) {
     {
         this.yVel *= -1;
     }
-    if (lineTest.collidesWith(prevY, prevX, nextY, nextX, this.radius))
+    if (line.collidesWith(prevY, prevX, nextY, nextX, this.radius))
     {
         this.yVel *= -1;
     }
@@ -57,12 +57,15 @@ g_ball.update = function (du) {
     this.cx += this.xVel * du;
     this.cy += this.yVel * du;
 };
-
-g_ball.reset = function () {
+// Throws the ball randomly to the left or right.
+g_ball.reset = function () { 
+    let random = Math.random() >= 0.5;
     this.cx = 300;
     this.cy = 100;
-    this.xVel = -5;
     this.yVel = 4;
+    if(random) this.xVel = -5;
+    else this.xVel = 5;
+    
 };
 
 g_ball.render = function (ctx) {
