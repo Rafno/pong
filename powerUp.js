@@ -6,6 +6,8 @@
 function random (max){
     return Math.floor(Math.random() * Math.floor(max));
 } 
+
+
 var powerUp = {
     cx: random(400),
     cy: 0,
@@ -13,9 +15,20 @@ var powerUp = {
     yVel: 1,
     xVel: 0,
     caught : false,
-    type : "Length"
 };
-
+function selectPowerUp(random){
+    switch (random) {
+    case 0:
+        return "Length";
+        break;
+    case 1:
+        return "Size";
+        break;
+    case 2:
+        return "Half";
+        break;
+    }
+}
 powerUp.update = function (du) {
     // Remember my previous position
     var prevY = this.cy;
@@ -28,7 +41,8 @@ powerUp.update = function (du) {
     if (g_paddle1.collidesWith(prevY, prevX, nextY, nextX, this.radius))
     {
         this.cy = -10;
-        g_paddle1.powerUp(powerUp.type);
+        let rng = random(3);
+        g_paddle1.powerUp(selectPowerUp(rng));
     }
     this.cy += this.yVel * du;
     var margin = 4 * this.radius;
@@ -44,5 +58,6 @@ powerUp.reset = function () {
 };
 
 powerUp.render = function (ctx) {
+    ctx.fillStyle = "ORANGE";
     fillCircle(ctx, this.cx, this.cy, this.radius);
 };

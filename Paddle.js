@@ -29,11 +29,17 @@ Paddle.prototype.render = function (ctx) {
 
 Paddle.prototype.powerUp = function (type){
     if(type === "Length"){
+        g_ball.radius = 10;
         this.halfWidth = 100;
     }
-    setTimeout(function() {
+    if(type === "Size"){
         this.halfWidth = 50;
-    }, 3000);
+        g_ball.radius = 20;
+    }
+    if(type === "Half"){
+        g_ball.radius = 10;
+        this.halfWidth = 25;
+    }
 }
 
 Paddle.prototype.collidesWith = function (prevY, prevX, 

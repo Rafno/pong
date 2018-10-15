@@ -48,9 +48,11 @@ line.create(100,6,2);
 line.create(150,6,1);
 
 // Sets up a timer to move the line, pauses if pause is on. 
-setInterval(function(){ line.move(g_isUpdatePaused) }, 5000);
+setInterval(function(){ line.move(g_isUpdatePaused) }, 1000);
 
-// =============
+
+
+// ============
 // GATHER INPUTS
 // =============
 
@@ -84,6 +86,16 @@ function gameOver(){
     endGame = true;
     KEY_PAUSE = "YOU GET NOTHING";
     g_isUpdatePaused = true;
+    if(confirm("Game over! Try again?")){
+        line.destroy();
+        line.create(50,6,3);
+        line.create(100,6,2);
+        line.create(150,6,1);
+        g_ball.reset();
+        endGame = false;
+        KEY_PAUSE = 'P'.charCodeAt(0);
+        g_isUpdatePaused = false;
+    }
 }
 
 // =================
@@ -101,7 +113,6 @@ function gameOver(){
 // GAME-SPECIFIC RENDERING
 
 function renderSimulation(ctx) {
-
     g_ball.render(ctx);
     g_paddle1.render(ctx);
     powerUp.render(ctx);

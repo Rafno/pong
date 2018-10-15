@@ -36,13 +36,15 @@ Line.prototype.move = function (pauseButton) {
 Line.prototype.render = function (ctx) {
     this.lineOfBlocks.forEach(block => block.render(ctx));
 };
-
+Line.prototype.destroy = function () {
+    this.lineOfBlocks = [];
+}
 
 Line.prototype.collidesWith = function (prevY, prevX,
     nextY, nextX,
     r) {
-    let response = false;
-    this.lineOfBlocks.forEach(block => {
+        let response = false;
+        this.lineOfBlocks.forEach(block => {
         if (block.collidesWith(prevY, prevX, nextY, nextX, r)) {
             response = true;
         }

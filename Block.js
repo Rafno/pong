@@ -46,6 +46,7 @@ Block.prototype.collidesWith = function (prevY, prevX,
             nextX - r <= this.cx + this.halfWidth) {
             // It's a hit!
             this.health--;
+            this.cy = 500
             return true;
         }
 
